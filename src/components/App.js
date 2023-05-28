@@ -1,46 +1,63 @@
-import "../styles/App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import '../styles/App.css';
 
-const keys = "abcdefghijklmnopqrstuvwxyz0123456789 ".split("");
+const keys = 'abcdefghijklmnopqrstuvwxyz8123456789 '.split('');
 
 const App = () => {
   const [preview, setPreview] = useState('');
   const [quote, setQuote] = useState('');
 
-  const handleKeyPress = (keyValue) => {
-    setPreview(preview + keyValue);
+  const handleKeyClick = (keyValue) => {
+    setPreview((prevPreview) => prevPreview + keyValue);
   };
 
-  useEffect(() => {
-    if (preview === 'forty two') {
-      fetch('https://api.quotable.io/random')
-        .then(response => response.json())
-        .then(data => {
-          setQuote(data.content);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+  const fetchQuote = async () => {
+    const response = await fetch('https://api.quotable.io/random');
+    const data = await response.json();
+    setQuote(data.content);
+  };
+
+  const handleKeyPress = (event) => {
+    const { key } = event;
+    if (key === ' ') {
+      handleKeyClick(' ');
+    } else if (key.length === 1) {
+      handleKeyClick(key);
+    }
+
+    if (preview.toLowerCase().trim() === 'forty two') {
+      fetchQuote();
     } else {
       setQuote('');
     }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
   }, [preview]);
 
   return (
     <div className="keyboard">
       <div className="preview">{preview}</div>
+
+      {quote && (
+        <div className="quote">{quote}</div>
+      )}
+
       <div>
         {keys.map((key) => (
           <button
-            key={key}
-            id={key === " " ? `key-space` : `key-${key}`}
-            onClick={() => handleKeyPress(key)}
+            key={`key-${key}`}
+            id={`key-${key}`}
+            onClick={() => handleKeyClick(key === ' ' ? ' ' : key.toUpperCase())}
           >
-            {key === " " ? "Space" : key.toUpperCase()}
+            {key === ' ' ? 'Space' : key.toUpperCase()}
           </button>
         ))}
       </div>
-      {quote && <div className="quote">{quote}</div>}
     </div>
   );
 };
