@@ -1,0 +1,50 @@
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px auto;
+  max-width: 600px;
+}
+
+.preview {
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  text-align: center;
+}
+
+button {
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+.quote {
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px auto;
+  max-width: 600px;
+  font-size: 24px;
+  text-align: center;
+}
+
